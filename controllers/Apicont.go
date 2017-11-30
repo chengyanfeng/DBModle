@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	."testthree/models"
+	."DBModle/models"
 	"fmt"
-	. "testthree/util"
+	. "DBModle/util"
 
 )
 type TestController struct {
@@ -25,9 +25,17 @@ func (this *TestController) Getstudent(){
 	D(Cheng).Add(p)
 
 	//这是orcle 数据库
-	v,_:=Ora.Tables("CHENYANFENG")
+	//v,_:=Ora.Select("CHENYANFENG","city","A")
+	v,_:=Ora.SelectALL("CHENYANFENG")
 	fmt.Println(v)
-	this.Ctx.WriteString(JsonEncode(v))
+	fmt.Println("afafdafaffdfa")
+	p=P{}
+	p["id"]=166
+	p["name"]="cadfa"
+	p["city"]="afa"
+	Ora.Add("CHENYANFENG",p)
+
+	this.Ctx.WriteString(v)
 
 
 

@@ -1,10 +1,10 @@
 package main
 
 import (
-	_ "testthree/routers"
+	_ "DBModle/routers"
 	"github.com/astaxie/beego"
-	."testthree/models"
-	"testthree/controllers"
+	."DBModle/models"
+
 )
 var gorm Gorm
 func main() {
@@ -15,8 +15,8 @@ func main() {
 	beego.BConfig.EnableErrorsShow = true
 	beego.BConfig.CopyRequestBody = true
 
-	//自动注册路由
-	beego.AutoRouter(&controllers.TestController{})
+	//自动注册路由,可在main函数里注册也可以在router.go 的初始化函数注册。
+	//beego.AutoRouter(&controllers.TestController{})
 	beego.Run()
 }
 

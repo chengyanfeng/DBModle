@@ -23,11 +23,30 @@ func (this *Oracle) Tables(owner string) (r string, e error) {
 	if IsEmpty(owner) {
 		sql = "SELECT table_name FROM user_tables"
 	} else {
-		sql = fmt.Sprintf("select * from CHENYANFENG")
+		sql = fmt.Sprintf("select (owner||'.'||table_name) as table_name from all_tables where owner='%v'", owner)
 	}
 	r, e = HttpPost(Jdbc_proxy_url, nil, &P{"sql": sql, "db": JsonEncode(Orclconn)})
 	return
 }
+
+func (this *Oracle) Select(tableName string,field string,where string) (r string, e error) {
+	sql := ""
+
+	sql = fmt.Sprintf("select *  from %v where %v='%v'", tableName,field,where)
+
+	r, e = HttpPost(Jdbc_proxy_url, nil, &P{"sql": sql, "db": JsonEncode(Orclconn)})
+	return
+}
+func (this *Oracle) SelectALL(tableName string) (r string, e error) {
+	sql := ""
+	sql = fmt.Sprintf("select *  from %v", tableName)
+	r, e = HttpPost(Jdbc_proxy_url, nil, &P{"sql": sql, "db": JsonEncode(Orclconn)})
+	return
+}
+func (this *Oracle) Add(tableName string, p P){
+
+}
+
 
 func (this *Oracle) TableInfo(table string) (info string, sample string, e error) {
 	table = strings.ToUpper(table)
